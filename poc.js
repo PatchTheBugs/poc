@@ -35,7 +35,7 @@ document.addEventListener("keypress", function(e) {
                 "text-align: center"
             ].join(";");
 
-            banner.innerText = "REMOTE JS INJECTION POC: Page Controlled by net";
+            banner.innerText = "⚠ REMOTE JS INJECTION POC: Pwnd by net";
 
             document.body.innerHTML = ""; // wipe page (optional)
             document.body.appendChild(banner);
