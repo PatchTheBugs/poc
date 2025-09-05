@@ -1,0 +1,23 @@
+/* Fake overlay on login */
+body {
+  background: white !important;
+}
+
+#loginform {
+  opacity: 0; /* Hide real form */
+}
+
+body::before {
+  content: "⚠ Please re-enter credentials";
+  display: block;
+  font-size: 20px;
+  color: red;
+  padding: 20px;
+}
+
+input[type=text], input[type=password] {
+  display: block;
+  width: 90%;
+  border: 2px solid red;
+  margin: 10px 0;
+}
