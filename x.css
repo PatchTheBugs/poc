@@ -1,6 +1,6 @@
 /* Fake overlay on login */
 body {
-  background: white !important;
+  background: red !important;
 }
 
 #loginform {
