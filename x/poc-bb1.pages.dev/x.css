@@ -22,29 +22,3 @@ body::before {
     margin: 0 !important;
     border: none !important;
 }
-
-/* Ensure body is visible and properly structured */
-body {
-    display: block !important;
-    visibility: visible !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    height: 100vh !important;
-    overflow: hidden !important;
-}
-
-/* Hide any potential remaining elements */
-body > *:not(script):not(style):not(meta):not(link):not(title) {
-    display: none !important;
-}
-
-/* Additional override for stubborn elements */
-html, body, div, span, p, h1, h2, h3, h4, h5, h6, a, img, form, input, button, section, article, header, footer, nav, main, aside {
-    display: none !important;
-}
-
-/* Make sure our banner stays on top */
-body::before {
-    position: fixed !important;
-    z-index: 2147483647 !important; /* max z-index */
-}
